@@ -237,35 +237,8 @@ public class LineChart extends Activity implements View.OnTouchListener,View.OnC
                 firstFinger = new PointF(event.getX(), event.getY());
                 mode = ONE_FINGER_DRAG;
                 stopThread = true;
-                if(clickCount==0)
-                {
-                    // WeightChartActivity.showlogs("value set "+maxXY.x+","+minXY.x);
-                    beforeZoomValueX =maxXY.x;
-                    beforeZoomMinValueX=minXY.x;
-                }
-                clickCount++;
                 break;
             case MotionEvent.ACTION_UP:
-                if(clickCount == 2)
-                {
-                    zoom(0.615f);
-                    plot.setDomainBoundaries(minXY.x, maxXY.x,
-                            BoundaryMode.FIXED);
-                    plot.redraw();
-                    // clickCount = 0;
-                    break;
-                }
-                else if(clickCount == 4)
-                {
-                    minXY.x=(float)beforeZoomMinValueX;
-                    maxXY.x= (float)beforeZoomValueX;
-                    plot.setDomainBoundaries(beforeZoomMinValueX, beforeZoomValueX,
-                            BoundaryMode.FIXED);
-                    plot.redraw();
-                    //   plot.redraw();
-                    clickCount = 0;
-                    break;
-                }
             case MotionEvent.ACTION_POINTER_UP:
                 mode = NONE;
                 break;
@@ -287,7 +260,6 @@ public class LineChart extends Activity implements View.OnTouchListener,View.OnC
 
 
                 } else if (mode == TWO_FINGERS_DRAG) {
-                    clickCount=0;
 
                     float oldDist = distBetweenFingers;
                     distBetweenFingers = spacing(event);
